@@ -10,11 +10,14 @@ Color orange = Color(0xffFD8970);
 Color cyan = Color(0xffC4DDE1);
 Color orangeYellow = Color(0xffFDDDC6);
 Color red = Color(0xffFA4A0C);
+Color redVariant = Color(0xffC31162);
 Color lightBlack = Color(0xff414652);
 Color lightGrey = Color(0xff939CA7);
 Color darkGray = Color(0xff5C5C5C);
 Color lightBlue = Color(0xffE1EFFB);
 Color lightWhite = Color(0xffeeeeee);
+Color lightGreayTransparent = Color(0xffC4C4C4).withOpacity(0.43);
+Color green = Color(0xff32A071);
 BoxShadow boxShadow = BoxShadow(
   // color: Colors.black.withOpacity(.25),
   spreadRadius: 0,

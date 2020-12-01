@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:healthify/cores/cores.dart';
-import 'package:healthify/features/pharmacies/screens/pharmacy.dart';
+import 'package:healthify/features/pharmacies/components/components.dart';
+import 'package:healthify/features/pharmacies/screens/drugs_details.dart';
 import '../components/components.dart';
 
 class PharmacyStoreDrugs extends StatelessWidget {
@@ -79,10 +80,27 @@ class PharmacyStoreDrugs extends StatelessWidget {
                   child: Wrap(
                     direction: Axis.horizontal,
                     children: [
-                      Stores(
+                      Drugs(
                         name: "Bicycle Pharmacy",
                         description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
+                        image: "assets/images/gentamycin.png",
+                        price: 15000000.toString(),
+                        onTap: () => changeScreen(
+                          context,
+                          DrugDetails(
+                            name: "Gentamycin",
+                            description: "Tablet 50pieces",
+                            image: "assets/images/gentamycin_details.png",
+                            price: 1570,
+                            quantity: 45,
+                          ),
+                        ),
+                      ),
+                      Drugs(
+                        name: "Bicycle Pharmacy",
+                        description: "all drugs at affordable price",
+                        image: "assets/images/gentamycin.png",
+                        price: 1500.toString(),
                         onTap: null,
                       ),
                       Stores(
