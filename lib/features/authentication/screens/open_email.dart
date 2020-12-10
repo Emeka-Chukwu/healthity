@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:android_intent/android_intent.dart';
 import 'package:flutter/material.dart';
 import 'package:healthify/cores/cores.dart';
 import 'package:healthify/features/authentication/screens/create_new_password.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OpenEmails extends StatelessWidget {
   @override
@@ -51,13 +55,30 @@ class OpenEmails extends StatelessWidget {
                   ),
                   color: darkPurple,
                 ),
-                child: Text(
-                  "Open Email App",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: Responsive.textSize(3.6, context),
-                    height: Responsive.textSize(.3, context),
-                    color: white,
+                child: GestureDetector(
+                  onTap: () {
+                    if (Platform.isAndroid) {
+                      AndroidIntent intent = AndroidIntent(
+                        action: 'android.intent.action.MAIN',
+                        category: 'android.intent.category.APP_EMAIL',
+                      );
+                      intent.launch().catchError((e) {
+                        print(e.toString());
+                      });
+                    } else if (Platform.isIOS) {
+                      launch("message://").catchError((e) {
+                        print(e.toString());
+                      });
+                    }
+                  },
+                  child: Text(
+                    "Open Email App",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: Responsive.textSize(3.6, context),
+                      height: Responsive.textSize(.3, context),
+                      color: white,
+                    ),
                   ),
                 )),
           ),

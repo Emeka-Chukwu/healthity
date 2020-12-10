@@ -1,21 +1,23 @@
 class Users {
-  String name;
+  String username;
   String email;
   String password;
+  String confirm_password;
 
-  Users({this.name, this.email, this.password});
+  Users({this.username, this.email, this.password, this.confirm_password});
 
   Users.fromJson(Map<String, dynamic> json) {
-    name = json["name"];
-    email = json["email"];
-    password = json["password"];
+    username = json["username"] ?? null;
+    email = json["email"] ?? null;
+    password = json["password"] ?? null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data["name"] = this.name;
+    data["username"] = this.username;
     data["email"] = this.email;
     data["password"] = this.password;
+    data["confirm_password"] = this.confirm_password;
     return data;
   }
 }

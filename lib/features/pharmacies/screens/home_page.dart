@@ -2,12 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:healthify/cores/cores.dart';
+import 'package:healthify/features/authentication/repositories/repository.dart';
 import 'package:healthify/features/pharmacies/screens/pharmacy.dart';
 import '../components/components.dart';
 
 class PharmacyStore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    redirectToLogin(context);
+
     return Scaffold(
       backgroundColor: lightWhite,
       body: SingleChildScrollView(

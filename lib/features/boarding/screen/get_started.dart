@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:healthify/cores/cores.dart';
+import 'package:healthify/features/authentication/repositories/repository.dart';
 import 'package:healthify/features/boarding/screen/guest_welcome.dart';
 
 class GetStarted extends StatelessWidget {
@@ -43,8 +44,7 @@ class GetStarted extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: GestureDetector(
-                onTap: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => WelcomeGuest())),
+                onTap: () => redirectToMainPage(context),
                 child: Container(
                   width: Responsive.screenWidth(90, context),
                   height: Responsive.screenWidth(12, context),

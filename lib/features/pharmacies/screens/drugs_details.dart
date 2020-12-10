@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthify/cores/cores.dart';
+import 'package:healthify/features/authentication/repositories/repository.dart';
 import 'package:healthify/features/pharmacies/components/components.dart';
 import 'package:healthify/features/pharmacies/screens/check_out.dart';
 
@@ -22,6 +23,8 @@ class DrugDetails extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    redirectToLogin(context);
+
     print(image);
     return Scaffold(
       body: SafeArea(

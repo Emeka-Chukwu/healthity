@@ -18,6 +18,8 @@ Color lightBlue = Color(0xffE1EFFB);
 Color lightWhite = Color(0xffeeeeee);
 Color lightGreayTransparent = Color(0xffC4C4C4).withOpacity(0.43);
 Color green = Color(0xff32A071);
+Color darkerGrey = Color(0xff3d3d3d);
+Color darker = Color(0xff868686);
 BoxShadow boxShadow = BoxShadow(
   // color: Colors.black.withOpacity(.25),
   spreadRadius: 0,

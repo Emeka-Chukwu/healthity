@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healthify/cores/cores.dart';
 import 'package:healthify/features/pharmacies/components/components.dart';
 import 'package:healthify/features/pharmacies/components/notification_cart.dart';
@@ -39,9 +40,9 @@ class OrderPlacingPayment extends StatelessWidget {
                   YMargin(Responsive.screenWidth(8, context)),
                   Text(
                     "PAYMENT",
-                    style: TextStyle(
-                        fontSize: Responsive.textSize(3.6, context),
-                        fontWeight: FontWeight.w500),
+                    style: GoogleFonts.lato(
+                        fontSize: Responsive.textSize(3.8, context),
+                        fontWeight: FontWeight.w400),
                   ),
                 ],
               ),
@@ -52,7 +53,15 @@ class OrderPlacingPayment extends StatelessWidget {
                   horizontal: Responsive.screenWidth(8, context)),
               child: Row(
                 children: [
-                  Text("Card Number"),
+                  Text(
+                    "Card Number",
+                    style: GoogleFonts.karla(
+                      fontWeight: FontWeight.w400,
+                      fontSize: Responsive.textSize(3.2, context),
+                      height: Responsive.textSize(0.2, context),
+                      color: darkerGrey,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -75,33 +84,41 @@ class OrderPlacingPayment extends StatelessWidget {
                       image: AssetImage(
                     "assets/images/Mastercard.png",
                   )),
-                  XMargin(Responsive.screenWidth(3, context)),
+                  XMargin(Responsive.screenWidth(5, context)),
                   Text(
                     "****",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: Responsive.textSize(3.5, context)),
+                    style: GoogleFonts.lato(
+                      fontSize: Responsive.textSize(3.5, context),
+                      fontWeight: FontWeight.w900,
+                      height: Responsive.textSize(0.2, context),
+                    ),
                   ),
                   XMargin(Responsive.screenWidth(3, context)),
                   Text(
                     "****",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: Responsive.textSize(3.5, context)),
+                    style: GoogleFonts.lato(
+                      fontSize: Responsive.textSize(3.5, context),
+                      fontWeight: FontWeight.w900,
+                      height: Responsive.textSize(0.2, context),
+                    ),
                   ),
                   XMargin(Responsive.screenWidth(3, context)),
                   Text(
                     "****",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: Responsive.textSize(3.5, context)),
+                    style: GoogleFonts.lato(
+                      fontSize: Responsive.textSize(3.5, context),
+                      fontWeight: FontWeight.w900,
+                      height: Responsive.textSize(0.2, context),
+                    ),
                   ),
                   XMargin(Responsive.screenWidth(3, context)),
                   Text(
                     "5488",
-                    style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: Responsive.textSize(3.5, context)),
+                    style: GoogleFonts.lato(
+                      fontSize: Responsive.textSize(3.5, context),
+                      fontWeight: FontWeight.w400,
+                      height: Responsive.textSize(0.2, context),
+                    ),
                   )
                 ],
               ),
@@ -113,11 +130,27 @@ class OrderPlacingPayment extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Expiration"),
+                  Text(
+                    "Expiration",
+                    style: GoogleFonts.karla(
+                      fontWeight: FontWeight.w400,
+                      fontSize: Responsive.textSize(3.2, context),
+                      height: Responsive.textSize(0.2, context),
+                      color: darkerGrey,
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(
                         right: Responsive.screenWidth(3, context)),
-                    child: Text("CVC"),
+                    child: Text(
+                      "CVC",
+                      style: GoogleFonts.karla(
+                        fontWeight: FontWeight.w400,
+                        fontSize: Responsive.textSize(3.2, context),
+                        height: Responsive.textSize(0.2, context),
+                        color: darkerGrey,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -140,20 +173,27 @@ class OrderPlacingPayment extends StatelessWidget {
                 children: [
                   Text(
                     "MM / YY",
-                    style: TextStyle(
-                        // fontWeight: FontWeight.w900,
-                        fontSize: Responsive.textSize(3.5, context)),
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.w400,
+                      fontSize: Responsive.textSize(3.2, context),
+                      height: Responsive.textSize(0.2, context),
+                      color: darker,
+                    ),
                   ),
                   Text(
                     "876",
-                    style: TextStyle(
-                        // fontWeight: FontWeight.w900,
-                        fontSize: Responsive.textSize(3.5, context)),
+                    style: GoogleFonts.lato(
+                      fontWeight: FontWeight.w400,
+                      fontSize: Responsive.textSize(3.2, context),
+                      height: Responsive.textSize(0.2, context),
+                      color: darker,
+                      letterSpacing: 0.3,
+                    ),
                   ),
                 ],
               ),
             ),
-            YMargin(Responsive.screenHeight(5, context)),
+            YMargin(Responsive.screenHeight(6.5, context)),
             OrderDetails(
               title: "SubTotal",
               description: "x2 N1570",
@@ -168,7 +208,7 @@ class OrderPlacingPayment extends StatelessWidget {
               title: "Order Total",
               amount: 4710,
             ),
-            YMargin(Responsive.screenWidth(5, context)),
+            YMargin(Responsive.screenWidth(15, context)),
             PaymentButton(
               onTap: () => changeScreen(
                 context,

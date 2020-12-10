@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healthify/cores/cores.dart';
 
 class StoreAddress extends StatelessWidget {
@@ -30,7 +31,15 @@ class StoreAddress extends StatelessWidget {
                 size: Responsive.textSize(8, context),
               ),
               XMargin(Responsive.screenWidth(15, context)),
-              Expanded(child: Text(address)),
+              Expanded(
+                  child: Text(
+                address,
+                style: GoogleFonts.lato(
+                  fontWeight: FontWeight.w300,
+                  color: black,
+                  fontSize: Responsive.textSize(3.2, context),
+                ),
+              )),
             ],
           ),
         ),
@@ -59,9 +68,33 @@ class OrderDetails extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title),
-          Text(description),
-          Text("$amount"),
+          Text(
+            title,
+            style: GoogleFonts.lato(
+              fontWeight: FontWeight.w400,
+              fontSize: Responsive.textSize(3.2, context),
+              height: Responsive.textSize(0.2, context),
+              color: black,
+            ),
+          ),
+          Text(
+            description,
+            style: GoogleFonts.lato(
+              fontWeight: FontWeight.w400,
+              fontSize: Responsive.textSize(3.2, context),
+              height: Responsive.textSize(0.2, context),
+              color: darker,
+            ),
+          ),
+          Text(
+            "$amount",
+            style: GoogleFonts.lato(
+              fontWeight: FontWeight.w400,
+              fontSize: Responsive.textSize(3.2, context),
+              height: Responsive.textSize(0.2, context),
+              color: black,
+            ),
+          ),
         ],
       ),
     );
@@ -84,8 +117,22 @@ class OrderDetailsTotal extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title),
-          Text("$amount"),
+          Text(title,
+              style: GoogleFonts.lato(
+                fontWeight: FontWeight.w500,
+                fontSize: Responsive.textSize(3.2, context),
+                height: Responsive.textSize(0.2, context),
+                color: black,
+              )),
+          Text(
+            "$amount",
+            style: GoogleFonts.lato(
+              fontWeight: FontWeight.w500,
+              fontSize: Responsive.textSize(3.2, context),
+              height: Responsive.textSize(0.2, context),
+              color: black,
+            ),
+          ),
         ],
       ),
     );
@@ -102,9 +149,9 @@ class OrderDetailsButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
           width: Responsive.screenWidth(88, context),
-          height: Responsive.screenHeight(6, context),
+          height: Responsive.screenHeight(6.5, context),
           decoration: BoxDecoration(
-              color: purple,
+              color: normalPurple,
               borderRadius:
                   BorderRadius.circular(Responsive.screenWidth(2, context))),
           alignment: Alignment.center,
@@ -113,7 +160,12 @@ class OrderDetailsButton extends StatelessWidget {
               horizontal: Responsive.screenWidth(7, context)),
           child: Text(
             "Checkout",
-            style: TextStyle(color: white),
+            style: GoogleFonts.lato(
+              fontSize: Responsive.textSize(3.8, context),
+              fontWeight: FontWeight.w500,
+              height: Responsive.textSize(.2, context),
+              color: white,
+            ),
           )),
     );
   }
@@ -158,7 +210,7 @@ class ThanksButton extends StatelessWidget {
           width: Responsive.screenWidth(88, context),
           height: Responsive.screenHeight(6, context),
           decoration: BoxDecoration(
-              color: purple,
+              color: normalPurple,
               borderRadius:
                   BorderRadius.circular(Responsive.screenWidth(2, context))),
           alignment: Alignment.center,
@@ -167,7 +219,12 @@ class ThanksButton extends StatelessWidget {
               horizontal: Responsive.screenWidth(7, context)),
           child: Text(
             "Back to Home",
-            style: TextStyle(color: white),
+            style: GoogleFonts.lato(
+              fontWeight: FontWeight.w500,
+              fontSize: Responsive.textSize(3.8, context),
+              height: Responsive.textSize(0.1, context),
+              color: white,
+            ),
           )),
     );
   }

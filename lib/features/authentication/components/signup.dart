@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:healthify/cores/cores.dart';
+import 'package:healthify/features/authentication/blocs/user_bloc.dart';
 
 class SignUp extends StatelessWidget {
   final Function function;
 
-  const SignUp({Key key, @required this.function}) : super(key: key);
+  const SignUp({
+    Key key,
+    @required this.function,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    RegisterUser userEvent = RegisterUser();
     return Container(
       height: Responsive.screenHeight(57, context),
       child: Column(
@@ -27,6 +32,7 @@ class SignUp extends StatelessWidget {
                 ),
                 labelText: "Username",
               ),
+              onChanged: (val) => userEvent.username = val,
               style: TextStyle(
                 color: black,
                 height: Responsive.textSize(.4, context),
@@ -39,6 +45,7 @@ class SignUp extends StatelessWidget {
           Container(
             width: Responsive.screenWidth(90, context),
             child: TextField(
+              onChanged: (val) => userEvent..email = val,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
@@ -64,6 +71,7 @@ class SignUp extends StatelessWidget {
           Container(
             width: Responsive.screenWidth(90, context),
             child: TextField(
+              onChanged: (val) => userEvent.password = val,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
@@ -89,6 +97,7 @@ class SignUp extends StatelessWidget {
           Container(
             width: Responsive.screenWidth(90, context),
             child: TextField(
+              onChanged: (val) => userEvent.confirm_password = val,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
@@ -127,7 +136,7 @@ class SignUp extends StatelessWidget {
                     GestureDetector(
                       onTap: function,
                       child: Text(
-                        "Sign up",
+                        "Sign in",
                         style: TextStyle(
                           color: red,
                           height: Responsive.textSize(.4, context),
@@ -143,7 +152,7 @@ class SignUp extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: GestureDetector(
-              onTap: null,
+              onTap: () => getAllTheFields(userEvent),
               child: Container(
                 width: Responsive.screenWidth(85, context),
                 height: Responsive.screenHeight(6, context),
@@ -159,5 +168,10 @@ class SignUp extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void getAllTheFields(RegisterUser user) {
+    final register = AuthUserBloc();
+    register.add(user);
   }
 }
