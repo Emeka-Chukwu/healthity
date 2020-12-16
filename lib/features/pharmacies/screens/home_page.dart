@@ -6,14 +6,29 @@ import 'package:healthify/cores/cores.dart';
 import 'package:healthify/features/authentication/repositories/repository.dart';
 import 'package:healthify/features/pharmacies/blocs/pharmacy_bloc.dart';
 import 'package:healthify/features/pharmacies/screens/pharmacy.dart';
+import 'package:healthify/features/pharmacies/screens/search_details.dart';
 import '../components/components.dart';
+import 'drugs_details.dart';
 
-class PharmacyStore extends StatelessWidget {
+class PharmacyStore extends StatefulWidget {
+  @override
+  _PharmacyStoreState createState() => _PharmacyStoreState();
+}
+
+class _PharmacyStoreState extends State<PharmacyStore> {
+  final pharmacy = PharmacyBloc();
+
+  @override
+  void initState() {
+    pharmacy.add(FetchPharmacy());
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final pharmacy = PharmacyBloc();
-    pharmacy.add(FetchPharmacy());
-    redirectToLogin(context);
+    // redirectToLogin(context);
+    // pharmacy.add(FetchSearch(searchText: "paracetamol"));
 
     return Scaffold(
       backgroundColor: lightWhite,
@@ -68,24 +83,31 @@ class PharmacyStore extends StatelessWidget {
                   ],
                 ),
                 YMargin(Responsive.screenHeight(5, context)),
-                Container(
-                  height: Responsive.screenHeight(5, context),
-                  width: Responsive.screenWidth(88, context),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        Responsive.screenWidth(2, context),
-                      ),
-                      color: lightPurple),
-                  child: TextField(
-                    onSubmitted: null,
-                    decoration: InputDecoration(
-                      hintText: "Search for Drugs",
-                      border: InputBorder.none,
-                      prefixIcon: Icon(Icons.search),
-                      hintStyle: TextStyle(fontWeight: FontWeight.w300),
-                    ),
-                  ),
-                ),
+                BlocBuilder<PharmacyBloc, PharmacyState>(
+                    cubit: pharmacy,
+                    builder: (context, state) {
+                      return Container(
+                        height: Responsive.screenHeight(5, context),
+                        width: Responsive.screenWidth(88, context),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              Responsive.screenWidth(2, context),
+                            ),
+                            color: lightPurple),
+                        child: TextField(
+                          onSubmitted: (value) {
+                            print(value);
+                            pharmacy.add(FetchSearch(searchText: value));
+                          },
+                          decoration: InputDecoration(
+                            hintText: "Search for Drugs",
+                            border: InputBorder.none,
+                            prefixIcon: Icon(Icons.search),
+                            hintStyle: TextStyle(fontWeight: FontWeight.w300),
+                          ),
+                        ),
+                      );
+                    }),
                 YMargin(Responsive.screenHeight(3, context)),
                 Text(
                   "Popular Stores",
@@ -99,6 +121,39 @@ class PharmacyStore extends StatelessWidget {
                   cubit: pharmacy,
                   listener: (context, state) {},
                   builder: (context, state) {
+                    if (state is SearchLoaded) {
+                      final data = state.inventorySearch;
+                      return Container(
+                        alignment: Alignment.center,
+                        child: data.length > 0
+                            ? Wrap(
+                                direction: Axis.horizontal,
+                                children: data
+                                    .map((e) => DrugsTwo(
+                                          image: e.image,
+                                          name: e.itemName,
+                                          description: e.address,
+                                          price: e.pricePerUnit,
+                                          onTap: () => changeScreen(
+                                            context,
+                                            DrugDetailsTwo(
+                                              name: e.itemName,
+                                              description: "Tablet 50pieces",
+                                              image: e.image,
+                                              price: e.pricePerUnit,
+                                              quantity: e.quantity.numberInt,
+                                              activeSubstance:
+                                                  e.activeIngredients,
+                                              storeName: e.name,
+                                            ),
+                                          ),
+                                        ))
+                                    .toList(),
+                              )
+                            : Center(
+                                child: Text("No drug matched your search")),
+                      );
+                    }
                     if (state is PharmacyLoaded) {
                       final data = state.pharmacy.data;
                       print(data);

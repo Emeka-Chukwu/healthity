@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:healthify/features/pharmacies/models/pharmacy.dart';
+import 'package:healthify/features/pharmacies/models/search_pharmacy.dart';
 import 'package:healthify/features/pharmacies/repositories/pharmacy_repositiory.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
@@ -16,6 +17,12 @@ abstract class PharmacyEvent extends Equatable {
 
 class FetchPharmacy extends PharmacyEvent {
   FetchPharmacy();
+}
+
+class FetchSearch extends PharmacyEvent {
+  final String searchText;
+
+  FetchSearch({@required this.searchText});
 }
 
 // the state declaration
@@ -34,8 +41,14 @@ class PharmacyLoaded extends PharmacyState {
   PharmacyLoaded({@required this.pharmacy});
 }
 
+class SearchLoaded extends PharmacyState {
+  List<InventorySearch> inventorySearch;
+  SearchLoaded({@required this.inventorySearch});
+}
+
 class PharmacyError extends PharmacyState {
-  const PharmacyError();
+  final String message;
+  const PharmacyError({@required this.message});
 }
 
 // the hydrated Drugbloc section
@@ -50,6 +63,10 @@ class PharmacyBloc extends HydratedBloc<PharmacyEvent, PharmacyState> {
   ) async* {
     if (event is FetchPharmacy) {
       yield* _getPharmaciesData();
+      // yield* _getPharmaciesDataSearch();
+
+    } else if (event is FetchSearch) {
+      yield* _getPharmaciesDataSearch(event);
     }
   }
 
@@ -74,6 +91,27 @@ class PharmacyBloc extends HydratedBloc<PharmacyEvent, PharmacyState> {
       yield PharmacyLoaded(pharmacy: pharmacy);
     } catch (e) {
       print(e.toString());
+    }
+  }
+
+  Stream<PharmacyState> _getPharmaciesDataSearch(
+      FetchSearch searchText) async* {
+    print("sorted");
+    print(searchText.searchText);
+    yield PharmacyInitial();
+    try {
+      final search =
+          await pharmacyRepository.getAllSearchDrugs(searchText.searchText);
+      List<InventorySearch> sorted;
+      if (search != null) {
+        sorted =
+            pharmacyRepository.getDrugsSearched(search, searchText.searchText);
+        print(sorted[0]);
+        yield SearchLoaded(inventorySearch: sorted);
+      }
+    } catch (e) {
+      print(e.toString());
+      yield PharmacyError(message: e.toString());
     }
   }
 }
