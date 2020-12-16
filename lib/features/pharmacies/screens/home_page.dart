@@ -1,14 +1,18 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:healthify/cores/cores.dart';
 import 'package:healthify/features/authentication/repositories/repository.dart';
+import 'package:healthify/features/pharmacies/blocs/pharmacy_bloc.dart';
 import 'package:healthify/features/pharmacies/screens/pharmacy.dart';
 import '../components/components.dart';
 
 class PharmacyStore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final pharmacy = PharmacyBloc();
+    pharmacy.add(FetchPharmacy());
     redirectToLogin(context);
 
     return Scaffold(
@@ -91,61 +95,103 @@ class PharmacyStore extends StatelessWidget {
                       fontSize: Responsive.textSize(3.3, context)),
                 ),
                 YMargin(Responsive.screenHeight(3, context)),
-                Container(
-                  alignment: Alignment.center,
-                  child: Wrap(
-                    direction: Axis.horizontal,
-                    children: [
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: () => changeScreen(
-                            context,
-                            PharmacyDetails(
-                              name: "Bicycle Pharmacy",
-                              description: "all drugs at affordable price",
-                              image: "assets/images/pharmacy_image.png",
-                            )),
+                BlocConsumer<PharmacyBloc, PharmacyState>(
+                  cubit: pharmacy,
+                  listener: (context, state) {},
+                  builder: (context, state) {
+                    if (state is PharmacyLoaded) {
+                      final data = state.pharmacy.data;
+                      print(data);
+                      print(state);
+                      print(state.pharmacy);
+                      return Container(
+                        alignment: Alignment.center,
+                        child: Wrap(
+                            direction: Axis.horizontal,
+                            children: data
+                                .map((element) => Stores(
+                                      name: element.storeName,
+                                      description: element.address ??
+                                          "Unverified address or No Address yet",
+                                      image: "assets/images/pharmacy_image.png",
+                                      onTap: () => changeScreen(
+                                          context,
+                                          PharmacyDetails(
+                                            name: element.storeName,
+                                            description:
+                                                "all drugs at affordable price",
+                                            image:
+                                                "assets/images/pharmacy_image.png",
+                                            data: element,
+                                          )),
+                                    ))
+                                .toList()
+                            // Stores(
+                            //   name: "Bicycle Pharmacy",
+                            //   description: "all drugs at affordable price",
+                            //   image: "assets/images/pharmacy_image.png",
+                            //   onTap: () => changeScreen(
+                            //       context,
+                            //       PharmacyDetails(
+                            //         name: "Bicycle Pharmacy",
+                            //         description:
+                            //             "all drugs at affordable price",
+                            //         image: "assets/images/pharmacy_image.png",
+                            //       )),
+                            // ),
+                            //   Stores(
+                            //     name: "Bicycle Pharmacy",
+                            //     description: "all drugs at affordable price",
+                            //     image: "assets/images/pharmacy_image.png",
+                            //     onTap: null,
+                            //   ),
+                            //   Stores(
+                            //     name: "Bicycle Pharmacy",
+                            //     description: "all drugs at affordable price",
+                            //     image: "assets/images/pharmacy_image.png",
+                            //     onTap: null,
+                            //   ),
+                            //   Stores(
+                            //     name: "Bicycle Pharmacy",
+                            //     description: "all drugs at affordable price",
+                            //     image: "assets/images/pharmacy_image.png",
+                            //     onTap: null,
+                            //   ),
+                            //   Stores(
+                            //     name: "Bicycle Pharmacy",
+                            //     description: "all drugs at affordable price",
+                            //     image: "assets/images/pharmacy_image.png",
+                            //     onTap: null,
+                            //   ),
+                            //   Stores(
+                            //     name: "Bicycle Pharmacy",
+                            //     description: "all drugs at affordable price",
+                            //     image: "assets/images/pharmacy_image.png",
+                            //     onTap: null,
+                            //   ),
+                            //   Stores(
+                            //     name: "Bicycle Pharmacy",
+                            //     description: "all drugs at affordable price",
+                            //     image: "assets/images/pharmacy_image.png",
+                            //     onTap: null,
+                            //   ),
+                            // ],
+                            ),
+                      );
+                    }
+                    return Container(
+                      child: Column(
+                        children: [
+                          Text("Data loading"),
+                          YMargin(Responsive.constScreenHeight(3, context)),
+                          Center(
+                              child: CircularProgressIndicator(
+                            backgroundColor: green,
+                          )),
+                        ],
                       ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
               ],
             ),

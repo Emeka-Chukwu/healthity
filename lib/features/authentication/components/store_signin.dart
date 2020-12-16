@@ -79,6 +79,21 @@ class StoreSignIn extends StatelessWidget {
               YMargin(
                 Responsive.screenHeight(5, context),
               ),
+              if (state is AuthUserError)
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Responsive.screenWidth(5, context)),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      state.message,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
+              YMargin(
+                Responsive.screenHeight(5, context),
+              ),
               Expanded(
                 child: GestureDetector(
                   onTap: () => changeScreen(context, StoreRequestPassword()),

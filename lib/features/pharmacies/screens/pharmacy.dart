@@ -9,16 +9,18 @@ import 'package:healthify/features/authentication/repositories/repository.dart';
 import 'package:healthify/features/authentication/screens/user_sign_in.dart';
 import 'package:healthify/features/boarding/screen/get_started.dart';
 import 'package:healthify/features/pharmacies/components/components.dart';
+import 'package:healthify/features/pharmacies/models/pharmacy.dart';
 import 'package:healthify/features/pharmacies/screens/pharmacy_drugs.dart';
 
 class PharmacyDetails extends StatelessWidget {
+  final Data data;
   final String id;
   final String name;
   final String description;
   final String image;
 
   const PharmacyDetails(
-      {Key key, this.id, this.name, this.description, this.image})
+      {Key key, this.id, this.name, this.description, this.image, this.data})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -77,7 +79,7 @@ class PharmacyDetails extends StatelessWidget {
                       ),
                       Image(
                         image: AssetImage(image),
-                        height: Responsive.constScreenHeight(36, context),
+                        height: Responsive.constScreenHeight(34, context),
                         fit: BoxFit.cover,
                       ),
                     ]),
@@ -98,11 +100,11 @@ class PharmacyDetails extends StatelessWidget {
                             style: TextStyle(
                                 color: normalPurple,
                                 fontWeight: FontWeight.w600,
-                                fontSize: Responsive.textSize(7, context)),
+                                fontSize: Responsive.textSize(5.5, context)),
                           ),
                           YMargin(Responsive.screenHeight(0.7, context)),
                           Text(
-                            description,
+                            description ?? "description",
                             style: TextStyle(
                                 color: black,
                                 fontWeight: FontWeight.w300,
@@ -122,7 +124,7 @@ class PharmacyDetails extends StatelessWidget {
                                       horizontal:
                                           Responsive.screenWidth(10, context)),
                                   child: Text(
-                                    "via Awolowo Road/Ijebu Bypass/Liebu Bypass and Ogunmola Street/A1",
+                                    data.address ?? "Address",
                                     style: TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.w300,
@@ -147,7 +149,7 @@ class PharmacyDetails extends StatelessWidget {
                                       horizontal:
                                           Responsive.screenWidth(10, context)),
                                   child: Text(
-                                    "+2341930830303",
+                                    "${data.phoneNumber ?? 08165955353}",
                                     style: TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.w300,
@@ -172,7 +174,7 @@ class PharmacyDetails extends StatelessWidget {
                                       horizontal:
                                           Responsive.screenWidth(10, context)),
                                   child: Text(
-                                    "180 drugs in stock",
+                                    "${data.inventory.length}",
                                     style: TextStyle(
                                         color: black,
                                         fontWeight: FontWeight.w300,
@@ -188,7 +190,8 @@ class PharmacyDetails extends StatelessWidget {
                             onTap: () => changeScreen(
                                 context,
                                 PharmacyStoreDrugs(
-                                  name: "Bicycle Pharmacy",
+                                  name: data.storeName,
+                                  inventory: data.inventory,
                                 )),
                             child: Container(
                               alignment: Alignment.center,

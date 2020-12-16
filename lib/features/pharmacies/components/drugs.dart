@@ -40,7 +40,7 @@ class Drugs extends StatelessWidget {
         child: Column(children: [
           YMargin(Responsive.screenHeight(3, context)),
           Image(
-            image: AssetImage(image),
+            image: NetworkImage(image),
             height: Responsive.screenHeight(15, context),
             fit: BoxFit.cover,
           ),

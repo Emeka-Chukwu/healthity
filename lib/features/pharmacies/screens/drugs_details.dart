@@ -9,17 +9,21 @@ class DrugDetails extends StatelessWidget {
   final String name;
   final String description;
   final String image;
-  final int price;
+  final String price;
   final int quantity;
+  final String activeSubstance;
+  final String storeName;
 
   const DrugDetails(
       {Key key,
       this.id,
+      this.storeName,
       this.name,
       this.description,
       this.image,
       this.price,
-      this.quantity})
+      this.quantity,
+      this.activeSubstance})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -51,8 +55,9 @@ class DrugDetails extends StatelessWidget {
                     ],
                   ),
                   Image(
-                    image: AssetImage(image),
-                    height: Responsive.constScreenHeight(23, context),
+                    image: NetworkImage(image),
+                    height: Responsive.constScreenHeight(26, context),
+                    width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ]),
@@ -147,7 +152,7 @@ class DrugDetails extends StatelessWidget {
                                 ),
                                 YMargin(Responsive.screenHeight(1, context)),
                                 Text(
-                                  "Gentamycin",
+                                  activeSubstance,
                                   style: TextStyle(
                                     fontSize: Responsive.textSize(2.9, context),
                                     fontWeight: FontWeight.w500,
@@ -208,7 +213,7 @@ class DrugDetails extends StatelessWidget {
                                 ),
                                 YMargin(Responsive.screenHeight(1, context)),
                                 Text(
-                                  "Bicycle Pharmacy",
+                                  storeName,
                                   style: TextStyle(
                                     fontSize: Responsive.textSize(2.9, context),
                                     fontWeight: FontWeight.w500,

@@ -3,15 +3,22 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:healthify/cores/cores.dart';
 import 'package:healthify/features/pharmacies/components/components.dart';
+import 'package:healthify/features/pharmacies/models/pharmacy.dart';
 import 'package:healthify/features/pharmacies/screens/drugs_details.dart';
 import '../components/components.dart';
 
 class PharmacyStoreDrugs extends StatelessWidget {
   final String name;
+  final List<Inventory> inventory;
 
-  const PharmacyStoreDrugs({Key key, @required this.name}) : super(key: key);
+  const PharmacyStoreDrugs({
+    Key key,
+    @required this.name,
+    @required this.inventory,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    print(inventory);
     return Scaffold(
       backgroundColor: lightWhite,
       body: SingleChildScrollView(
@@ -78,69 +85,100 @@ class PharmacyStoreDrugs extends StatelessWidget {
                 Container(
                   alignment: Alignment.center,
                   child: Wrap(
-                    direction: Axis.horizontal,
-                    children: [
-                      Drugs(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/gentamycin.png",
-                        price: 15000000.toString(),
-                        onTap: () => changeScreen(
-                          context,
-                          DrugDetails(
-                            name: "Gentamycin",
-                            description: "Tablet 50pieces",
-                            image: "assets/images/gentamycin_details.png",
-                            price: 1570,
-                            quantity: 45,
-                          ),
-                        ),
+                      direction: Axis.horizontal,
+                      children: inventory.length > 0
+                          ? inventory
+                              .map(
+                                (e) => Drugs(
+                                  name: e.itemName,
+                                  description: e.activeIngredients,
+                                  price: e.pricePerUnit,
+                                  image: e.image,
+                                  onTap: () => changeScreen(
+                                    context,
+                                    DrugDetails(
+                                      name: e.itemName,
+                                      description: "Tablet 50pieces",
+                                      image: e.image,
+                                      price: e.pricePerUnit,
+                                      quantity: e.quantity,
+                                      activeSubstance: e.activeIngredients,
+                                      storeName: name,
+                                    ),
+                                  ),
+                                ),
+                              )
+                              .toList()
+                          : [
+                              Container(
+                                child: Center(
+                                    child: Text("No drug in this store yet",
+                                        style: TextStyle(
+                                          color: red,
+                                        ))),
+                              ),
+                            ]
+                      // Drugs(
+                      //   name: "Bicycle Pharmacy",
+                      //   description: "all drugs at affordable price",
+                      //   image: "assets/images/gentamycin.png",
+                      //   price: 15000000.toString(),
+                      //   onTap: () => changeScreen(
+                      //     context,
+                      // DrugDetails(
+                      //   name: "Gentamycin",
+                      //   description: "Tablet 50pieces",
+                      //   image: "assets/images/gentamycin_details.png",
+                      //   price: 1570,
+                      //   quantity: 45,
+                      // ),
+                      //   ),
+                      // ),
+                      //   Drugs(
+                      //     name: "Bicycle Pharmacy",
+                      //     description: "all drugs at affordable price",
+                      //     image: "assets/images/gentamycin.png",
+                      //     price: 1500.toString(),
+                      //     onTap: null,
+                      //   ),
+                      //   Stores(
+                      //     name: "Bicycle Pharmacy",
+                      //     description: "all drugs at affordable price",
+                      //     image: "assets/images/pharmacy_image.png",
+                      //     onTap: null,
+                      //   ),
+                      //   Stores(
+                      //     name: "Bicycle Pharmacy",
+                      //     description: "all drugs at affordable price",
+                      //     image: "assets/images/pharmacy_image.png",
+                      //     onTap: null,
+                      //   ),
+                      //   Stores(
+                      //     name: "Bicycle Pharmacy",
+                      //     description: "all drugs at affordable price",
+                      //     image: "assets/images/pharmacy_image.png",
+                      //     onTap: null,
+                      //   ),
+                      //   Stores(
+                      //     name: "Bicycle Pharmacy",
+                      //     description: "all drugs at affordable price",
+                      //     image: "assets/images/pharmacy_image.png",
+                      //     onTap: null,
+                      //   ),
+                      //   Stores(
+                      //     name: "Bicycle Pharmacy",
+                      //     description: "all drugs at affordable price",
+                      //     image: "assets/images/pharmacy_image.png",
+                      //     onTap: null,
+                      //   ),
+                      //   Stores(
+                      //     name: "Bicycle Pharmacy",
+                      //     description: "all drugs at affordable price",
+                      //     image: "assets/images/pharmacy_image.png",
+                      //     onTap: null,
+                      //   ),
+                      // ],
                       ),
-                      Drugs(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/gentamycin.png",
-                        price: 1500.toString(),
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                      Stores(
-                        name: "Bicycle Pharmacy",
-                        description: "all drugs at affordable price",
-                        image: "assets/images/pharmacy_image.png",
-                        onTap: null,
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ),

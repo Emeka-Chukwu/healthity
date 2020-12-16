@@ -22,7 +22,7 @@ class SignIn extends StatelessWidget {
       listener: (context, state) {
         print(state);
         if (state is AuthUserAuthenticated) {
-          changeScreenReplacement(
+          changeScreen(
             context,
             PharmacyStore(),
           );
@@ -82,6 +82,21 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
               ),
+              YMargin(
+                Responsive.screenHeight(5, context),
+              ),
+              if (state is AuthUserError)
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: Responsive.screenWidth(5, context)),
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      state.message,
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                ),
               YMargin(
                 Responsive.screenHeight(5, context),
               ),

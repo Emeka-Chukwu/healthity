@@ -105,6 +105,10 @@ class AuthStoreRegister extends AuthUserState {
   AuthStoreRegister();
 }
 
+class AuthUserRegister extends AuthUserState {
+  AuthUserRegister();
+}
+
 class AuthUserEmail extends AuthUserState {
   AuthUserEmail();
 }
@@ -113,7 +117,8 @@ class AuthUserEmail extends AuthUserState {
 // }
 
 class AuthUserError extends AuthUserState {
-  const AuthUserError();
+  final String message;
+  const AuthUserError({@required this.message});
 }
 
 // the hydrated Drugbloc section
@@ -154,7 +159,6 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
   }
 
   Stream<AuthUserState> _registerUser(RegisterUser register) async* {
-    // yield AuthUserInitial();
     print(register.confirm_password);
     print(2);
     print(register.username);
@@ -165,6 +169,8 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
     if (register.username.isNotEmpty &&
         register.email.isNotEmpty &&
         register.password.isNotEmpty) {
+      yield AuthUserAuthenticating();
+
       if (register.password == register.confirm_password) {
         var user = await userRepository.register(
           register.email,
@@ -173,6 +179,7 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
           register.confirm_password,
         );
         print(user);
+        yield AuthUserRegister();
       }
     }
 
@@ -182,6 +189,7 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
 
   Stream<AuthUserState> _registerStore(RegisterStore register) async* {
     // yield AuthUserInitial();
+
     print(register.confirm_password);
     print(2);
     print(register.email);
@@ -192,6 +200,8 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
         register.email.isNotEmpty &&
         register.password.isNotEmpty) {
       if (register.password == register.confirm_password) {
+        yield AuthUserAuthenticating();
+
         var user = await userRepository.registerStore(
             register.email,
             register.password,
@@ -209,7 +219,7 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
   }
 
   Stream<AuthUserState> _loginUser(LoginUser loginUser) async* {
-    // yield AuthUserInitial();
+    yield AuthUserInitial();
     print(loginUser.email);
     print(loginUser.password);
 
@@ -234,11 +244,13 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
           Map<String, dynamic> decodedToken = JwtDecoder.decode(user["token"]);
           print(decodedToken);
           yield AuthUserAuthenticated(user: Users.fromJson(decodedToken));
+        } else {
+          throw (user["error"]);
         }
       } catch (e) {
         print("Catch");
         print(e);
-        yield AuthUserError();
+        yield AuthUserError(message: e);
       }
     }
 
@@ -247,7 +259,7 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
   }
 
   Stream<AuthUserState> _loginStore(LoginStore loginUser) async* {
-    // yield AuthUserInitial();
+    yield AuthUserInitial();
     print(loginUser.email);
     print(loginUser.password);
 
@@ -272,11 +284,13 @@ class AuthUserBloc extends HydratedBloc<AuthUser, AuthUserState> {
           Map<String, dynamic> decodedToken = JwtDecoder.decode(user["token"]);
           print(decodedToken);
           yield AuthUserAuthenticated(user: Users.fromJson(decodedToken));
+        } else {
+          throw (user["error"]);
         }
       } catch (e) {
         print("Catch");
         print(e);
-        yield AuthUserError();
+        yield AuthUserError(message: e);
       }
     }
 
